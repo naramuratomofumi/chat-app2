@@ -33,14 +33,21 @@ RSpec.describe 'メッセージ投稿機能', type: :system do
       # 作成されたチャットルームへ遷移する
       click_on(@room_user.room.name)
 
-      # 値をテキストフォームに入力する
+      ## 値をテキストフォームに入力する
+      post = 'テスト'
+      fill_in 'message_content', with: post
 
       # 送信した値がDBに保存されていることを確認する
+      expect {
+        find('input[name="commit"]').click
+      }.to change { Message.count }.by(1)
 
       # 投稿一覧画面に遷移していることを確認する
+      expect(current_path).to eq(room_messages_path(@room_user.room))
 
       # 送信した値がブラウザに表示されていることを確認する
-
+      expect(page).to have_content(post)
+      
     end
 
     it '画像の投稿に成功すると、投稿一覧に遷移して、投稿した画像が表示されている' do
