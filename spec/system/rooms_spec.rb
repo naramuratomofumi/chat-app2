@@ -1,9 +1,22 @@
 require 'rails_helper'
 
-RSpec.describe "Rooms", type: :system do
+RSpec.describe 'チャットルームの削除機能', type: :system do
   before do
-    driven_by(:rack_test)
+    @room_user = FactoryBot.create(:room_user)
   end
 
-  pending "add some scenarios (or delete) #{__FILE__}"
+  it 'チャットルームを削除すると、関連するメッセージがすべて削除されている' do
+    # サインインする
+    sign_in(@room_user.user)
+
+    # 作成されたチャットルームへ遷移する
+    click_on(@room_user.room.name)
+
+    # メッセージ情報を5つDBに追加する
+
+    # 「チャットを終了する」ボタンをクリックすることで、作成した5つのメッセージが削除されていることを確認する
+
+    # トップページに遷移していることを確認する
+
+  end
 end
